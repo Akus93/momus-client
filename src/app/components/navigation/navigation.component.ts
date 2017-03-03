@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MdDialog} from '@angular/material';
+import {LoginDialogComponent} from "../login-dialog/login-dialog.component";
+
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MdDialog) { }
 
   ngOnInit() {
+  }
+
+  openLoginDialog() {
+    let dialogRef = this.dialog.open(LoginDialogComponent);
+    dialogRef.afterClosed().subscribe(
+      result => {
+
+      }
+    );
   }
 
 }
