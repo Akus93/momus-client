@@ -16,7 +16,7 @@ export class NavigationComponent implements OnInit {
   }
 
   openLoginDialog() {
-    let dialogRef = this.dialog.open(LoginDialogComponent);
+    let dialogRef = this.dialog.open(LoginDialogComponent, {width: '500px', height: '350px'});
     dialogRef.afterClosed().subscribe(
       result => {
 

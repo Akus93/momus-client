@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MdDialogRef} from "@angular/material";
+import {MdDialogRef, MdSnackBar} from "@angular/material";
+import {FormGroup, Validators, FormBuilder} from "@angular/forms";
+import {AuthService} from "../../services/auth/auth.service";
+
 
 @Component({
   selector: 'app-login-dialog',
@@ -8,9 +11,77 @@ import {MdDialogRef} from "@angular/material";
 })
 export class LoginDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MdDialogRef<LoginDialogComponent>) { }
+  EMAIL_REGEX = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+  loginForm: FormGroup;
+  nonFieldError: string;
 
-  ngOnInit() {
+  constructor(public dialogRef: MdDialogRef<LoginDialogComponent>, private authService: AuthService, private formBuilder: FormBuilder, public snackBar: MdSnackBar) { }
+
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.pattern(this.EMAIL_REGEX)]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+
   }
+
+  public onSubmit(): void {
+    for (let field in this.errorMessages)
+      this.errorMessages[field]['errors'] = [];
+
+    if (this.loginForm.valid) {
+      console.log('POPRAWNIE');
+      this.login();
+    }
+    else {
+      for (let field in this.errorMessages) {
+        let ctrl = this.loginForm.get(field);
+        if (ctrl.invalid) {
+          let messages = this.errorMessages[field]['messages'];
+          for (let key in ctrl.errors) {
+            this.errorMessages[field]['errors'].push(messages[key]);
+          }
+        }
+      }
+    }
+  }
+
+  private login(): void {
+    this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
+      .subscribe(
+        token => {
+          this.authService.setToken(token);
+          this.snackBar.open("Zalogowano się", null, {
+            duration: 2000,
+          });
+          this.dialogRef.close();
+        },
+        error => this.showErrorsFromServer(error)
+      );
+  }
+
+  private showErrorsFromServer(error: JSON): void {
+    for (let field in error)
+      if (field in this.errorMessages)
+        this.errorMessages[field]['errors'] = error[field];
+    this.nonFieldError = error['non_field_errors'][0] || '';
+  }
+
+  errorMessages = {
+    'email': {
+      'messages': {
+        'required': 'To pole jest wymagane.',
+        'pattern': 'Niepoprawny adres email.',
+      },
+      'errors': []
+    },
+    'password': {
+      'messages': {
+        'required': 'To pole jest wymagane.',
+        'minlength':  'Hasło musi posiadać conajmniej 8 znaków.'
+      },
+      'errors': []
+    },
+  };
 
 }

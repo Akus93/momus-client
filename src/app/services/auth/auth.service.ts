@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import { DOMAIN } from '../../globals';
 
 
-var sessionStorage: any;
+//var sessionStorage: any;
 
 @Injectable()
 export class AuthService {

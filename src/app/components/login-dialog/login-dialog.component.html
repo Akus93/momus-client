@@ -1,1 +1,28 @@
-<h3>LOGIN FORM</h3>
+<div class="login-modal">
+  <md-toolbar color="primary">Zaloguj się</md-toolbar>
+
+  <div class="form-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+
+      <md-input-container class="form-field">
+        <input mdInput formControlName="email" placeholder="Adres email">
+      </md-input-container>
+      <div *ngIf="errorMessages.email.errors" class="form-error-message">
+        {{ errorMessages.email.errors[0] }}
+      </div>
+
+      <md-input-container class="form-field">
+        <input mdInput formControlName="password" placeholder="Hasło" type="password">
+      </md-input-container>
+      <div *ngIf="errorMessages.password.errors" class="form-error-message">
+        {{ errorMessages.password.errors[0] }}
+      </div>
+
+      <div *ngIf="nonFieldError" class="form-error-message">
+        {{ nonFieldError }}
+      </div>
+
+      <button md-raised-button type="submit" class="submit-btn">Zaloguj się</button>
+    </form>
+  </div>
+</div>
