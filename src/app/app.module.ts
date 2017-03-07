@@ -13,6 +13,7 @@ import {UserService} from "./services/user/user.service";
 import {routes} from "./app.routing";
 import { FooterComponent } from './components/footer/footer/footer.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { SignupDialogComponent } from './components/signup-dialog/signup-dialog/signup-dialog.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     AppComponent,
     NavigationComponent,
     FooterComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    SignupDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
   providers: [AuthService, UserService],
   bootstrap: [AppComponent],
   entryComponents: [
-    LoginDialogComponent
+    LoginDialogComponent,
+    SignupDialogComponent
   ]
 })
 export class AppModule { }

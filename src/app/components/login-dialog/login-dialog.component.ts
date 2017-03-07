@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MdDialogRef, MdSnackBar} from "@angular/material";
 import {FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
+import {validateEmail} from "../../validators/validateEmail";
 
 
 @Component({
@@ -11,7 +12,6 @@ import {AuthService} from "../../services/auth/auth.service";
 })
 export class LoginDialogComponent implements OnInit {
 
-  EMAIL_REGEX = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
   loginForm: FormGroup;
   nonFieldError: string;
 
@@ -19,7 +19,7 @@ export class LoginDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.EMAIL_REGEX)]],
+      email: ['', [Validators.required, validateEmail]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
 
@@ -71,7 +71,7 @@ export class LoginDialogComponent implements OnInit {
     'email': {
       'messages': {
         'required': 'To pole jest wymagane.',
-        'pattern': 'Niepoprawny adres email.',
+        'validateEmail': 'Niepoprawny adres email.',
       },
       'errors': []
     },

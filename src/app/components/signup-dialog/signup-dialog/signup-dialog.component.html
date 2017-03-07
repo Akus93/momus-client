@@ -1,8 +1,7 @@
-<div class="login-modal">
-  <md-toolbar color="primary">Login</md-toolbar>
+<div class="signup-modal">
+  <md-toolbar color="primary">Sign up</md-toolbar>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
-
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
     <md-input-container class="form-field">
       <input mdInput formControlName="email" placeholder="Email">
     </md-input-container>
@@ -17,11 +16,13 @@
       {{ errorMessages.password.errors[0] }}
     </div>
 
-    <div *ngIf="nonFieldError" class="form-error-message">
-      {{ nonFieldError }}
+    <md-input-container class="form-field">
+      <input mdInput formControlName="confirmPassword" placeholder="Confirm password" type="password">
+    </md-input-container>
+    <div *ngIf="errorMessages.confirmPassword.errors" class="form-error-message">
+      {{ errorMessages.confirmPassword.errors[0] }}
     </div>
 
-    <button md-raised-button type="submit" class="submit-btn">Login</button>
+    <button md-raised-button class="submit-btn" type="submit">Create account</button>
   </form>
-
 </div>
