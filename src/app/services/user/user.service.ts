@@ -11,14 +11,13 @@ export class UserService {
 
   constructor(private http: Http) { }
 
-  public createUser(email: string, password: string, confirmPassword: string): Observable<string> {
+  public createUser(username: string, email: string, password: string, confirmPassword: string): Observable<string> {
 
     let url = DOMAIN + '/auth/registration/';
-    let body = JSON.stringify({ email: email, password1: password, password2: confirmPassword });
+    let body = JSON.stringify({username: username, email: email, password1: password, password2: confirmPassword });
     let options = {
       headers: new Headers({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Content-Type': 'application/json'
       })
     };
 
@@ -32,8 +31,7 @@ export class UserService {
     let url = DOMAIN + '/api/users/my-profile/';
     let options = {
       headers: new Headers({
-        'Authorization': 'Token '+ token,
-        'Accept': 'application/json'
+        'Authorization': 'Token '+ token
       })
     };
 
@@ -48,8 +46,7 @@ export class UserService {
     let options = {
       headers: new Headers({
         'Authorization': 'Token '+ token,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Content-Type': 'application/json'
       })
     };
 
@@ -61,15 +58,18 @@ export class UserService {
   public getUserProfile(username: string): Observable<UserProfile> {
 
     let url = DOMAIN + '/api/users/' + username +'/';
-    let options = {
-      headers: new Headers({
-        'Accept': 'application/json'
-      })
-    };
 
-    return this.http.get(url, options)
+    return this.http.get(url)
       .map(res => res.json())
       .catch(this.handleError);
+  }
+
+  public setUser(user: UserProfile): void {
+    sessionStorage.setItem('user', JSON.stringify(user));
+  };
+
+  public getUser(): UserProfile {
+    return JSON.parse(sessionStorage.getItem('user'));
   }
 
   private handleError (error: Response) {

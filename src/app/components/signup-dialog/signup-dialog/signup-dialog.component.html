@@ -2,6 +2,14 @@
   <md-toolbar color="primary">Sign up</md-toolbar>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+
+    <md-input-container class="form-field">
+      <input mdInput formControlName="username" placeholder="Username">
+    </md-input-container>
+    <div *ngIf="errorMessages.username.errors" class="form-error-message">
+      {{ errorMessages.username.errors[0] }}
+    </div>
+
     <md-input-container class="form-field">
       <input mdInput formControlName="email" placeholder="Email">
     </md-input-container>

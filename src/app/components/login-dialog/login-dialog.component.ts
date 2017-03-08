@@ -3,6 +3,7 @@ import {MdDialogRef, MdSnackBar} from "@angular/material";
 import {FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
 import {validateEmail} from "../../validators/validateEmail";
+import {UserService} from "../../services/user/user.service";
 
 
 @Component({
@@ -15,7 +16,8 @@ export class LoginDialogComponent implements OnInit {
   loginForm: FormGroup;
   nonFieldError: string;
 
-  constructor(public dialogRef: MdDialogRef<LoginDialogComponent>, private authService: AuthService, private formBuilder: FormBuilder, public snackBar: MdSnackBar) { }
+  constructor(public dialogRef: MdDialogRef<LoginDialogComponent>, private authService: AuthService,
+              private formBuilder: FormBuilder, public snackBar: MdSnackBar, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -51,7 +53,12 @@ export class LoginDialogComponent implements OnInit {
       .subscribe(
         token => {
           this.authService.setToken(token);
-          this.snackBar.open("Zalogowano się", null, {
+          this.userService.getCurrentUserProfile(token)
+              .subscribe(
+                user => this.userService.setUser(user),
+                error => {}
+              );
+          this.snackBar.open("Success", null, {
             duration: 2000,
           });
           this.dialogRef.close();

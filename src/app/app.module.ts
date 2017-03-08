@@ -14,6 +14,8 @@ import {routes} from "./app.routing";
 import { FooterComponent } from './components/footer/footer/footer.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { SignupDialogComponent } from './components/signup-dialog/signup-dialog/signup-dialog.component';
+import {PostService} from "./services/post/post.service";
+import {MainComponent} from "./components/main/main.component";
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { SignupDialogComponent } from './components/signup-dialog/signup-dialog/
     NavigationComponent,
     FooterComponent,
     LoginDialogComponent,
-    SignupDialogComponent
+    SignupDialogComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,11 @@ import { SignupDialogComponent } from './components/signup-dialog/signup-dialog/
     MaterialModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthService, UserService],
+  providers: [
+    AuthService,
+    UserService,
+    PostService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginDialogComponent,

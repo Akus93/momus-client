@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {MdDialogRef} from "@angular/material";
+import {MdDialogRef, MdSnackBar} from "@angular/material";
 import {validateEmail} from "../../../validators/validateEmail";
 import {validatePasswordConfirmation} from "../../../validators/validatePasswordConfirmation";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-signup-dialog',
@@ -11,12 +12,17 @@ import {validatePasswordConfirmation} from "../../../validators/validatePassword
 })
 export class SignupDialogComponent implements OnInit {
 
+  usernamePattern: any;
   registrationForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MdDialogRef<SignupDialogComponent>) { }
+  constructor(private formBuilder: FormBuilder, public dialogRef: MdDialogRef<SignupDialogComponent>,
+              private userService: UserService, public snackBar: MdSnackBar) {
+    this.usernamePattern = /^[\w.@+-_]+$/
+  }
 
   ngOnInit() {
     this.registrationForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(this.usernamePattern)]],
       email: ['', [Validators.required, validateEmail]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]]
@@ -27,43 +33,41 @@ export class SignupDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    for (let field in this.errorMessages)
+      this.errorMessages[field]['errors'] = [];
     let isValid: boolean = this.registrationForm.valid;
-    // if (isValid) {
-    //   this.userService.createUser(this.registrationForm.get('email').value,
-    //     this.registrationForm.get('password').value,
-    //     this.registrationForm.get('confirmPassword').value)
-    //     .subscribe(
-    //       token => {
-    //         sessionStorage.setItem('token', token );
-    //         this.eventsService.onLoggedIn$.emit(true);
-    //         this.toastyService.success({
-    //           title: "Sukces",
-    //           msg: "Utworzyłeś/aś nowe konto",
-    //           showClose: true,
-    //           timeout: 7000,
-    //           theme: 'default',
-    //         });
-    //         this.dialogRef.close();
-    //         this.router.navigate(['/account']);
-    //       },
-    //       error => this.showErrorsFromServer(error)
-    //     );
-    // }
-    // else
-    //   for (let field in this.errorMessages) {
-    //     this.errorMessages[field]['errors'] = [];
-    //     let ctrl = this.registrationForm.get(field);
-    //     if (ctrl.invalid) {
-    //       let messages = this.errorMessages[field]['messages'];
-    //       for (let key in ctrl.errors) {
-    //         this.errorMessages[field]['errors'].push(messages[key]);
-    //       }
-    //     }
-    //   }
+    if (isValid) {
+      this.userService.createUser(
+        this.registrationForm.get('username').value,
+        this.registrationForm.get('email').value,
+        this.registrationForm.get('password').value,
+        this.registrationForm.get('confirmPassword').value)
+        .subscribe(
+          token => {
+            this.snackBar.open("Success", null, {
+              duration: 2000,
+            });
+            this.dialogRef.close();
+          },
+          error => this.showErrorsFromServer(error)
+        );
+    }
+    else
+      for (let field in this.errorMessages) {
+        this.errorMessages[field]['errors'] = [];
+        let ctrl = this.registrationForm.get(field);
+        if (ctrl.invalid) {
+          let messages = this.errorMessages[field]['messages'];
+          for (let key in ctrl.errors) {
+            this.errorMessages[field]['errors'].push(messages[key]);
+          }
+        }
+      }
   }
 
   private translateErrorResponse(error: JSON): {} {
     const translations = {
+      'username': 'username',
       'email': 'email',
       'password1': 'password',
       'password2': 'confirmPassword'
@@ -84,6 +88,14 @@ export class SignupDialogComponent implements OnInit {
   }
 
   errorMessages = {
+    'username': {
+      'messages': {
+        'required':   'To pole jest wymagane.',
+        'maxlength':  'Nazwa użytkownika może posiadać maksymalnie 150 znaków.',
+        'pattern':    'Nazwa użytkownika może składać się tylko ze znaków alfanumerycznych, _, @, +.'
+      },
+      'errors': []
+    },
     'email': {
       'messages': {
         'required':       'To pole jest wymagane.',
