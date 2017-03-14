@@ -1,7 +1,17 @@
-.navbar-icon {
-  padding: 0 14px;
+.logo {
+  cursor: pointer;
 }
 
-.navbar-spacer {
-  flex: 1 1 auto;
+.navbar {
+  height: 50px;
+  background-color: #337ab7;
+  color: white;
+}
+
+.navbar-container {
+  height: 100%;
+}
+
+.navbar-content {
+  margin-top: 8px;
 }

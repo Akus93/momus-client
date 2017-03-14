@@ -16,6 +16,7 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { SignupDialogComponent } from './components/signup-dialog/signup-dialog/signup-dialog.component';
 import {PostService} from "./services/post/post.service";
 import {MainComponent} from "./components/main/main.component";
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MainComponent} from "./components/main/main.component";
     FooterComponent,
     LoginDialogComponent,
     SignupDialogComponent,
-    MainComponent
+    MainComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

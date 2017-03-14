@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {PostService} from "../../services/post/post.service";
+import {PostResponse} from "../../models/post";
 
 @Component({
   selector: 'app-main',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  postsResponse: PostResponse;
+
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
+    this.postService.getActivePosts()
+        .subscribe(
+          postsResponse => this.postsResponse = postsResponse,
+          error => console.error(error)
+        );
   }
 
 }

@@ -1,7 +1,7 @@
 import {UserService} from "../services/user/user.service";
 
 
-export class Post {
+class Post {
   author: UserService;
   title: string;
   slug: string;
@@ -9,4 +9,11 @@ export class Post {
   rate: number;
   tags: string[];
   isPending: boolean;
+}
+
+export class PostResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: Post[];
 }

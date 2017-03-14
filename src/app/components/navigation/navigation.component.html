@@ -1,16 +1,25 @@
-<md-toolbar color="primary">
-    <span>MOMUS</span>
-    <span class="navbar-spacer"></span>
+<div class="navbar">
+  <div class="container navbar-container">
+    <div class="navbar-content">
+      <span routerLink="/" class="logo">MOMUS</span>
 
-    <span *ngIf="!authService.isAuth()">
-      <button md-button (click)="openLoginDialog()">Login</button>
-      <button md-button (click)="openSignUpDialog()">Sign up</button>
-    </span>
+      <div class="pull-right">
+        <span *ngIf="!authService.isAuth()">
+          <button md-button (click)="openLoginDialog()">Login</button>
+          <button md-button (click)="openSignUpDialog()">Sign up</button>
+        </span>
 
-    <span *ngIf="authService.isAuth()">
-      <button md-button (click)="logout()">Logout</button>
-    </span>
+        <span *ngIf="authService.isAuth()">
+          <button md-button routerLink="/create-post">Create post</button>
+          <button md-button (click)="logout()">Logout</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
-</md-toolbar>
+
+
+
 
 

@@ -1,0 +1,13 @@
+<div class="page-wrapper container">
+
+  <input placeholder="Tytuł" [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
+  <div *ngIf="errors?.title">
+    {{errors.title}}
+  </div>
+  <input placeholder="Tagi">
+  <input type="file" accept="image/*" (change)="changeImageListener($event)">
+  <button (click)="onSubmit()">Dodaj</button>
+
+
+</div>
+
