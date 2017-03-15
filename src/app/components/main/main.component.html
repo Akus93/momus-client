@@ -1,8 +1,8 @@
 <div class="container">
   <div class="posts-box center-block">
     <div *ngFor="let post of postsResponse?.results" class="post center-block">
-      <h3>{{ post.title }}</h3>
-      <div><img src="{{post.image}}" alt="{{post.title}}" class="post-img"></div>
+      <div class="post-title" [routerLink]="['/post', post.slug]">{{ post.title }}</div>
+      <img src="{{post.image}}" alt="{{post.title}}" class="post-img" [routerLink]="['/post', post.slug]">
     </div>
   </div>
 </div>

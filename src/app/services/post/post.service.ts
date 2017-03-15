@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {DOMAIN} from "../../globals";
-import {PostResponse} from "../../models/post";
+import {PostResponse, Post} from "../../models/post.model";
 
 @Injectable()
 export class PostService {
@@ -21,6 +21,15 @@ export class PostService {
   public getPendingPosts(): Observable<PostResponse> {
 
     let url = DOMAIN + '/api/posts/?isPending=True';
+
+    return this.http.get(url)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  public getPost(slug: string): Observable<Post> {
+
+    let url = DOMAIN + '/api/posts/' + slug + '/';
 
     return this.http.get(url)
       .map(res => res.json())

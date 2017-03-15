@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../services/post/post.service";
-import {PostResponse} from "../../models/post";
+import {PostResponse} from "../../models/post.model";
 
 @Component({
   selector: 'app-main',

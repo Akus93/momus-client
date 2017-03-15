@@ -1,11 +1,11 @@
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
 html {
-  position: relative;
-  min-height: 100%;
-  background-color: #000000;
+  height: 100%;
 }
 
 body {
-  margin: 0 0 4em; /* em = footer:height*/
+  margin: 0;
+  height: 100%;
+  background-color: #000000 !important;
 }

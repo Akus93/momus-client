@@ -1,7 +1,7 @@
 import {UserService} from "../services/user/user.service";
 
 
-class Post {
+export class Post {
   author: UserService;
   title: string;
   slug: string;

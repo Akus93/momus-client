@@ -1,17 +1,15 @@
-.logo {
-  cursor: pointer;
-}
-
 .navbar {
   height: 50px;
-  background-color: #337ab7;
+  background-color: #172d43;
   color: white;
+  z-index: 1001;
 }
 
 .navbar-container {
-  height: 100%;
+  padding-top: 9px;
 }
 
-.navbar-content {
-  margin-top: 8px;
+.logo {
+  cursor: pointer;
+  font-size: 2em;
 }

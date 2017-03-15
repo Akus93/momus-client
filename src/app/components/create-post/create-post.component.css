@@ -1,3 +1,29 @@
 .page-wrapper {
-  margin-top: 20px;
+  margin-top: 100px;
+  background-color: #111111;
+}
+
+.form-box {
+  width: 100%;
+}
+
+.form {
+  margin-top: 30px;
+  width: 400px;
+}
+
+.form-field {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-field > label {
+  margin-right: 10px;
+  color: white;
+  font-size: 1.1em;
+}
+
+.submit-button {
+  color: #111111;
 }

@@ -3,7 +3,7 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
 
 import { DOMAIN } from '../../globals';
-import {UserProfile} from "../../models/user-profile";
+import {UserProfile} from "../../models/user-profile.model";
 
 
 @Injectable()
